@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.hit.myapp.reply.ReplyDao">
+    <insert id="insert" parameterType="ReplyVo" >
+        INSERT INTO reply 
+		( rep_content, rep_writer, rep_bbs_no )
+		VALUES ( #{repContent}, #{repWriter}, #{repBbsNo} )
+    </insert>
+    <select id="selectList" parameterType="int"  resultType="ReplyVo" >
+        SELECT rep_no, rep_content, rep_writer, rep_date, rep_bbs_no 
+        FROM reply
+        WHERE rep_bbs_no = #{repBbsNo}
+        ORDER BY rep_date DESC
+    </select>
+    <delete id="delete" parameterType="ReplyVo" >
+        DELETE FROM reply
+        WHERE rep_no = #{repNo} and rep_writer = #{repWriter}
+    </delete>
+</mapper>
+  
+
+
+
+
+
+
+
+

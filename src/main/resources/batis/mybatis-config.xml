@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+		<!-- Underscore(_)을 사용한 컬럼이름을  -->
+		<!-- 낙타표기법(CamelCase)을 사용한 자바 객체의 변수이름과 자동으로 매치시키도록 설정 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <typeAliases>
+		<!-- MyBatis 설정파일에서 kr.ac.hit.myapp.member.MemberVo 대신 MemberVo 라고 사용 가능  -->
+        <typeAlias type="kr.ac.hit.myapp.member.MemberVo" alias="MemberVo" />
+        <typeAlias type="kr.ac.hit.myapp.bbs.BbsVo" alias="BbsVo" />
+        <typeAlias type="kr.ac.hit.myapp.prod.ProductVo" alias="ProductVo" />
+        <typeAlias type="kr.ac.hit.myapp.bbs.AttachVo" alias="AttachVo" />
+        <typeAlias type="kr.ac.hit.myapp.reply.ReplyVo" alias="ReplyVo" />
+    </typeAliases>
+    <!-- 스프링과 함께 사용하는 경우, 데이터베이스와의 연결은 스프링이 담당하므로 불필요 -->
+	<!--   <environments default="development"> -->
+	<!--     <environment id="development"> -->
+	<!--       <transactionManager type="JDBC"/> -->
+	<!--       <dataSource type="POOLED"> -->
+	<!--         <property name="driver" value="${driver}"/> -->
+	<!--         <property name="url" value="${url}"/> -->
+	<!--         <property name="username" value="${username}"/> -->
+	<!--         <property name="password" value="${password}"/> -->
+	<!--       </dataSource> -->
+	<!--     </environment> -->
+	<!--   </environments> -->
+  <!-- MyBatis를 통해서 실행할 SQL문들을 정의해 놓은 XML 파일들의 위치를 등록 -->
+  <mappers>
+    <mapper resource="batis/mappers/MemberMapper.xml"/>
+    <mapper resource="batis/mappers/BbsMapper.xml"/>
+    <mapper resource="batis/mappers/ProductMapper.xml"/>
+    <mapper resource="batis/mappers/AttachMapper.xml"/>
+    <mapper resource="batis/mappers/ReplyMapper.xml"/>
+  </mappers>
+</configuration>
+
+
+
+
+
+
+

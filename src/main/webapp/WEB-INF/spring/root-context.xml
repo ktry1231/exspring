@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: 스프링의 DispatcherServlet들이 모두 공유하는 객체들을 등록 -->
+	<!-- 즉, 일반적으로 Service, Dao와 관련된 객체들을 등록 -->
+	
+	<!-- @Transactional 같은 애노테이션을 사용하여 트랜잭션 설정이 가능하도록 -->
+	<!-- 트랜잭션매니저 객체 등록시 이름을 "transactionManager"로 설정하지 않았다면, -->
+	<!-- transaction-manager="트랜잭션매니저등록이름" 속성으로 지정  -->
+	<tx:annotation-driven transaction-manager="transactionManager"  />
+	
+	<!-- 스프링의 트랜잭션 관리기능을 사용하기 위해서 등록 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<constructor-arg ref="dataSource"></constructor-arg>
+	</bean>
+	
+	<context:property-placeholder location="classpath:env.properties"/> 
+	
+	<!-- 데이터베이스와 연결을 생성해주는 데이터소스 객체 등록 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+<!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
+<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/com" /> -->
+<!-- 		<property name="username" value="com" /> -->
+<!-- 		<property name="password" value="com01" /> -->
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+	</bean>
+	
+	<!-- MyBatis의 SqlSession 객체를 생성해주는 객체를 등록 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- MyBatis 설정파일 위치 지정 -->
+	  	<property name="configLocation" value="classpath:batis/mybatis-config.xml" />
+	  	<!-- <property name="mapperLocations" value="classpath*:sample/config/mappers/**/*.xml" /> -->
+	</bean>	
+	
+	<!-- SessionFactory를 사용하여 MyBatis의 SqlSession을 생성하고 이를 통해 SQL문을 실행하는 객체 -->
+	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"> -->
+		<!-- 생성자(new)의 첫번째 인자로 "sqlSessionFactory"라는 이름으로 등록된 객체를 전달  -->
+	<!--   	<constructor-arg index="0" ref="sqlSessionFactory" /> -->
+	<!-- </bean> -->
+	
+	<!-- kr.ac.hit.myapp 패키지(폴더) 아래에 있는  -->
+	<!-- @Mapper가 붙은 인터페이스들을 찾아서 -->
+	<!-- MyBatis를 사용하는 구현체를 자동으로 생성하여 스프링에 등록 -->
+	<mybatis-spring:scan base-package="kr.ac.hit.myapp" annotation="org.apache.ibatis.annotations.Mapper" />
+	
+	
+	<!-- base-package에 지정된 패키지(폴더) 아래에 있는 클래스들 중에서 -->
+	<!-- @Controller,@Service,@Repository,@Component가 붙은 클래스의 객체를 만들어 스프링에 등록 -->
+	<context:component-scan base-package="kr.ac.hit.myapp" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<!-- @Controller 붙은 클래스는 찾지 않도록 -->
+	</context:component-scan>
+	
+</beans>
+
+
+
+
+
+
+

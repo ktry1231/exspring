@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+	
+	<!-- kr.ac.hit.ex.App 클래스의 인스턴스를 생성(new)하여 "a"라는 이름으로 보관(등록) -->
+<!-- 	<bean id="a" class="kr.ac.hit.ex.App" > -->
+		<!-- 이 객체의 greet 변수에, 스프링에 "h"라는 이름으로 등록된 객체를 저장 -->
+<!-- 		<property name="greet" ref="h"></property> -->
+<!-- 	</bean> -->
+	<!-- kr.ac.hit.ex.Hello 클래스의 인스턴스를 생성(new)하여 "h"라는 이름으로 보관(등록) -->
+<!-- 	<bean id="h" class="kr.ac.hit.ex.Hello" ></bean> -->
+<!-- 	<bean id="b" class="kr.ac.hit.ex.Bye" ></bean> -->
+	
+<!-- 	kr.ac.hit.ex 패키지(폴더) 아래에 있는 클래스들 중에서 -->
+<!-- 	@Component,@Controller,@Service,@Repository 가 붙은 클래스들을 모두 등록	 -->
+	<context:component-scan base-package="kr.ac.hit.ex" ></context:component-scan>
+	
+	<!-- @Aspect 등 AOP 관련 애노테이션을 사용하여 AOP 설정을 하도록 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>	
+</beans>
+
+
+
+
+
+
+
+

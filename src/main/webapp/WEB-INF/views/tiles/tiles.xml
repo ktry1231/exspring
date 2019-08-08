@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- "baseLayout" 화면은 "/WEB-INF/views/comm/layout.jsp" 파일의 -->
+	<!-- header 부분에 "/WEB-INF/views/comm/menu.jsp" 파일을 넣고 -->
+	<!-- footer 부분에 "/WEB-INF/views/comm/footer.jsp" 파일을 넣어서 만들라는 의미 -->
+  <definition name="baseLayout" template="/WEB-INF/views/comm/layout.jsp">
+    <put-attribute name="header" value="/WEB-INF/views/comm/menu.jsp" />
+    <put-attribute name="body" value="" />
+    <put-attribute name="footer" value="/WEB-INF/views/comm/footer.jsp" />
+  </definition>
+	
+  <!--   baseLayout 화면을 상속하여  -->
+  <!--   body 부분만 "/WEB-INF/views/member/memAdd.jsp" 파일로 교체  -->
+<!--   <definition name="member/memAdd" extends="baseLayout" > -->
+<!--       <put-attribute name="body" value="/WEB-INF/views/member/memAdd.jsp" /> -->
+<!--   </definition> -->
+<!--   <definition name="member/memList" extends="baseLayout" > -->
+<!--       <put-attribute name="body" value="/WEB-INF/views/member/memList.jsp" /> -->
+<!--   </definition> -->
+   
+  <!-- 화면 정의 이름에 와일드카드(*) 사용 가능   -->
+  <!-- {1},{2},{3}와 같은 표현으로 1,2,3번째 와일드카드 부분의 내용을 사용 가능 -->
+  <definition name="*/*" extends="baseLayout" >
+      <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+  </definition>
+  
+</tiles-definitions>
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 값으로 현재 mapper 파일을 나타내는 ID 같은 고유값을 부여 -->
+<!-- 보통 이 파일에 정의된 SQL문을 실행시킬 Dao 인터페이스의 (패키지포함)전체이름으로 지정 -->
+<mapper namespace="kr.ac.hit.myapp.member.MemberDao">
+	<!-- 자바 객체의 속성(변수명)과 데이터베이스 테이블의 컬럼명을 매치시키는 정보 -->
+<!--     <resultMap type="MemberVo" id="memberMap"> -->
+		<!-- mem_id 컬럼의 값을 MemberVo 객체의 memId 변수(속성)에 저장하라는 의미  -->
+<!--         <id property="memId" column="mem_id" /> -->
+<!--         <result property="memPass" column="mem_pass" /> -->
+<!--         <result property="memName" column="mem_name" /> -->
+<!--         <result property="memPoint" column="mem_point" /> -->
+<!--     </resultMap> -->
+    
+	<!-- 실행할 SQL문의 종류와 일치하는 태그(엘리먼트)를 사용하여 SQL문을 등록   -->
+	<!-- id 값으로 이 SQL문을 나타내는 고유한 값을 지정 -->
+	<!-- 보통 이 SQL문을 실행할 Dao 인터페이스의 메서드 이름과 동일하게 설정 -->
+	<!-- parameterType 값으로 SQL문을 실행하기 위해서 인자로 받아올 데이터의 타입을 지정 -->
+	<insert id="insert" parameterType="MemberVo"  >
+	    INSERT INTO member 
+		( mem_id, mem_pass, mem_name, mem_point, mem_img )
+		VALUES ( #{memId}, #{memPass}, #{memName}, #{memPoint}, #{memImg} )
+	</insert>
+	<!-- #{xxx}로 파라미터로 받은 객체의 xxx 속성(변수)값을 SQL 내에서 사용 가능 -->
+	
+<!-- 	memberMap이라는 resultMap에 정의된 대로 컬럼값을 자바 객체의 변수(속성)에 담으라는 의미 -->
+<!-- 	<select id="selectList"  resultMap="memberMap" > -->
+	<select id="selectList"  resultType="MemberVo"  >
+	    SELECT mem_id, mem_name, mem_point FROM member
+	</select>
+	
+	<select id="select"  parameterType="string"  resultType="MemberVo"  >
+	    SELECT mem_id, mem_name, mem_point, mem_img FROM member
+	    WHERE mem_id = #{memId}
+	</select>
+	
+	<update id="update" parameterType="MemberVo" >
+	    UPDATE member
+	    SET mem_name = #{memName} , mem_point= #{memPoint}
+	    WHERE mem_id = #{memId}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+	    DELETE FROM member
+	    WHERE mem_id = #{memId}
+	</delete>
+	
+	<select id="selectLoginUser" parameterType="MemberVo" resultType="MemberVo" >
+	    SELECT mem_id, mem_name, mem_point FROM member
+	    WHERE mem_id = #{memId} and mem_pass = #{memPass}
+	</select>
+</mapper>
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.hit.myapp.bbs.AttachDao">
+    <insert id="insert" parameterType="AttachVo" >
+        INSERT INTO attach 
+		( att_org_name, att_new_name, att_bbs_no )
+		VALUES ( #{attOrgName}, #{attNewName}, #{attBbsNo} )
+    </insert>
+    <select id="select" parameterType="int" resultType="AttachVo" >
+        SELECT att_no, att_org_name, att_new_name, att_bbs_no
+        FROM attach
+        WHERE att_no = #{attNo}
+    </select>
+</mapper>
+  
+
+
+
+
+
+
+
+

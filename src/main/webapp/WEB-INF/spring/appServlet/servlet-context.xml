@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- 애노테이션을 사용하여 Spring MVC가 제공하는 기능들을 사용(설정)할 수 있도록 -->
+	<annotation-driven />
+
+	<!-- "/resources/**" 주소로 오는 요청(GET방식)은  -->
+	<!-- /resources/ 폴더에서 지정된 경로의 파일을 찾아서 응답으로 보내주는 핸들러(컨트롤러) 등록  -->
+	<!-- 스프링 컨트롤러가 처리할 필요가 없는 정적인 파일(*.css,*.js,*.jpg...) 처리에 사용 -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!-- 컨트롤러의 메서드가 반환한 뷰이름을 기반으로 뷰객체(JSP)을 찾아서 실행(출력) -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" />
+	</beans:bean>
+	
+	<!-- 컨트롤러에서 반환한 뷰이름(JSP이름)을 타일즈에 정의된 화면 이름으로 해석하여 -->
+	<!-- 타일즈에 정의된 화면을 출력(응답으로 전송)하도록 하는 객체 -->
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+	<!-- 위에 등록된 InternalResourceViewResolver보다 먼저 뷰이름을 받아서 처리하기 위해서 -->
+	<!-- InternalResourceViewResolver보다 낮은 순서(order) 값 설정 -->
+		<beans:property name="order" value="1" />
+	</beans:bean>
+	
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>/WEB-INF/views/tiles/tiles.xml</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	
+<!-- base-package에 지정된 패키지(폴더) 아래에 있는 클래스들 중에서 -->
+<!-- @Controller,@Service,@Repository,@Component가 붙은 클래스의 객체를 만들어 스프링에 등록 -->
+	<context:component-scan base-package="kr.ac.hit.myapp" use-default-filters="false" >
+<!-- use-default-filters 사용 안함 == @Controller,@Service,@Repository,@Component 찾지 않는다 -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<!-- @Controller 붙은 클래스는 찾아서 등록 -->
+	</context:component-scan>
+	
+	<!-- 핸들러 인터셉터 등록 -->
+	<interceptors>
+		<interceptor>
+			<!-- 어떤 주소로 요청이 왔을때 이 인터셉터를 실행할 것인지 -->
+			<!-- 스프링 경로 설정에서 **은 /를 포함한 모든 글자를 의미 -->
+			<mapping path="/**/*"/>
+			<!-- 인터셉터를 실행하지 않을 요청 주소를 설정 -->
+			<exclude-mapping path="/member/login.do"/>
+			<exclude-mapping path="/member/add.do"/>
+			<!-- 실행할 인터셉터 클래스 -->
+			<beans:bean class="kr.ac.hit.myapp.comm.LoginInterceptor"></beans:bean>				
+		</interceptor>
+	</interceptors>
+	
+	<!-- 파일이 포함된 멀티파트 폼 데이터를 받아서 해석할 때 사용될 멀티파트 리졸버를 -->
+	<!-- multipartResolver 라는 이름으로 등록 	 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 업로드 파일의 최대 크기 지정 가능 -->
+		<!-- <beans:property name="maxUploadSize" value="-1" /> -->
+	</beans:bean>
+	
+	<!-- 검증결과 출력할 에러메시지를 위해서 사용할 메시지소스 객체를 messageSource라는 이름으로 등록  -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<!-- 클래스패스 상에 있는 messages.properties을 사용 -->
+		<beans:property name="basename" value="messages" ></beans:property>
+	</beans:bean>
+</beans:beans>
+
+
+
+
+
+
+
+
+
