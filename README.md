@@ -1,5 +1,15 @@
 # Spring Framework Study
 
+## 프로젝트 실행 방법
+* /src/main/resources/env.properties 파일 생성 후 내용을 다음과 같이 작성
+~~~
+#데이터베이스 접속 정보
+db.driver=데이터베이스JDBC드라이버클래스
+db.url=데이터베이스접속주소
+db.username=데이터베이스접속아이디
+db.password=데이터베이스접속비밀번호
+~~~
+
 - spring
 	- https://spring.io/projects/spring-framework
 	- (한글) https://blog.outsider.ne.kr/tag/spring_reference_documentation
