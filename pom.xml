@@ -94,7 +94,7 @@
 		<dependency>
 		    <groupId>org.hibernate.validator</groupId>
 		    <artifactId>hibernate-validator</artifactId>
-		    <version>6.0.17.Final</version>
+		    <version>6.0.20.Final</version>
 		</dependency>
 				
 		<!-- JAVA 객체와 JSON 문자열 간의 상호 변환 -->
